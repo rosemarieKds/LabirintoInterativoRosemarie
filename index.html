@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labirinto Misterioso</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Labirinto Misterioso</h1>
+            <p>Use as setas do teclado para mover o jogador. Colete todas as moedas e chegue à saída!</p>
+        </header>
+        
+        <div class="game-area">
+            <div id="game-container">
+                <div id="game-board"></div>
+            </div>
+            
+            <div class="info-panel">
+                <h2>Painel de Controle</h2>
+                <div class="stats">
+                    <div class="stat">
+                        <span>Pontuação:</span>
+                        <span id="score">0</span>
+                    </div>
+                    <div class="stat">
+                        <span>Moedas coletadas:</span>
+                        <span id="coins">0/5</span>
+                    </div>
+                    <div class="stat">
+                        <span>Vidas:</span>
+                        <span id="lives">3</span>
+                    </div>
+                    <div class="stat">
+                        <span>Tempo:</span>
+                        <span id="timer">60</span>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <h3>Controles</h3>
+                    <ul>
+                        <li><span class="key">↑</span> Mover para cima</li>
+                        <li><span class="key">↓</span> Mover para baixo</li>
+                        <li><span class="key">←</span> Mover para esquerda</li>
+                        <li><span class="key">→</span> Mover para direita</li>
+                        <li><span class="key">R</span> Reiniciar jogo</li>
+                    </ul>
+                    
+                    <button id="restart-btn">Reiniciar Jogo</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h2>Como Usar a IA para Melhorar o Jogo</h2>
+            <p>Você pode utilizar ferramentas de IA como ChatGPT ou GitHub Copilot para:</p>
+            <ul>
+                <li>Gerar labirintos mais complexos automaticamente</li>
+                <li>Criar inimigos com comportamentos inteligentes</li>
+                <li>Otimizar o código existente</li>
+                <li>Adicionar novos recursos como power-ups e animações</li>
+                <li>Criar uma tela de início e de game over</li>
+                <li>Implementar um sistema de salvamento de pontuações</li>
+            </ul>
+            <p>Experimente pedir à IA: "Como adicionar um inimigo que persegue o jogador em JavaScript?"</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

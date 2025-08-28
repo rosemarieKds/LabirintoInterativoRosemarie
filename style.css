@@ -1,0 +1,251 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 900px;
+    width: 100%;
+}
+
+header {
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.game-area {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+}
+
+#game-container {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(15, 30px);
+    grid-template-rows: repeat(15, 30px);
+    gap: 1px;
+    background-color: #222;
+    border: 3px solid #555;
+}
+
+.cell {
+    width: 30px;
+    height: 30px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wall {
+    background-color: #3a5199;
+    border: 1px solid #2a3f7f;
+}
+
+.path {
+    background-color: #1e1e2a;
+}
+
+.player {
+    background-color: #ff3864;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #ff3864;
+    animation: pulse 1.5s infinite alternate;
+}
+
+.coin {
+    background-color: #ffdd00;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #ffdd00;
+}
+
+.exit {
+    background-color: #00cc66;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #00cc66;
+    animation: glow 1.5s infinite alternate;
+}
+
+.enemy {
+    background-color: #ff5252;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(45deg);
+    box-shadow: 0 0 8px #ff5252;
+}
+
+.power-up {
+    background-color: #9d4dff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #9d4dff;
+    animation: spin 4s infinite linear;
+}
+
+.info-panel {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    min-width: 250px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.info-panel h2 {
+    color: #3a5199;
+    margin-bottom: 15px;
+    text-align: center;
+    border-bottom: 2px solid #3a5199;
+    padding-bottom: 8px;
+}
+
+.stats {
+    margin-bottom: 20px;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.controls {
+    margin-top: 25px;
+}
+
+.controls h3 {
+    margin-bottom: 10px;
+    color: #3a5199;
+}
+
+.controls ul {
+    list-style-type: none;
+    padding-left: 10px;
+}
+
+.controls li {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.key {
+    display: inline-block;
+    background: #3a5199;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-right: 8px;
+    font-size: 0.9rem;
+    min-width: 30px;
+    text-align: center;
+}
+
+button {
+    background: linear-gradient(to right, #3a5199, #ff3864);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 15px;
+    width: 100%;
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.instructions {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    width: 100%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.instructions h2 {
+    color: #3a5199;
+    margin-bottom: 15px;
+    text-align: center;
+    border-bottom: 2px solid #3a5199;
+    padding-bottom: 8px;
+}
+
+.instructions p {
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.instructions ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.instructions li {
+    margin-bottom: 8px;
+}
+
+@keyframes pulse {
+    from { transform: scale(0.9); }
+    to { transform: scale(1.1); }
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 5px #00cc66; }
+    to { box-shadow: 0 0 15px #00cc66; }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .game-area {
+        flex-direction: column;
+    }
+    
+    #game-board {
+        grid-template-columns: repeat(15, 20px);
+        grid-template-rows: repeat(15, 20px);
+    }
+    
+    .cell {
+        width: 20px;
+        height: 20px;
+    }
+}
