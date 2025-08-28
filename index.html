@@ -4,7 +4,259 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Labirinto Misterioso</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            padding: 20px;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 900px;
+            width: 100%;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .game-area {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            width: 100%;
+        }
+        
+        #game-container {
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(15, 30px);
+            grid-template-rows: repeat(15, 30px);
+            gap: 1px;
+            background-color: #222;
+            border: 3px solid #555;
+        }
+        
+        .cell {
+            width: 30px;
+            height: 30px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .wall {
+            background-color: #3a5199;
+            border: 1px solid #2a3f7f;
+        }
+        
+        .path {
+            background-color: #1e1e2a;
+        }
+        
+        .player {
+            background-color: #ff3864;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff3864;
+            animation: pulse 1.5s infinite alternate;
+        }
+        
+        .coin {
+            background-color: #ffdd00;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #ffdd00;
+        }
+        
+        .exit {
+            background-color: #00cc66;
+            border-radius: 5px;
+            box-shadow: 0 0 10px #00cc66;
+            animation: glow 1.5s infinite alternate;
+        }
+        
+        .enemy {
+            background-color: #ff5252;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(45deg);
+            box-shadow: 0 0 8px #ff5252;
+        }
+        
+        .power-up {
+            background-color: #9d4dff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #9d4dff;
+            animation: spin 4s infinite linear;
+        }
+        
+        .info-panel {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            min-width: 250px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-panel h2 {
+            color: #3a5199;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 2px solid #3a5199;
+            padding-bottom: 8px;
+        }
+        
+        .stats {
+            margin-bottom: 20px;
+        }
+        
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .controls {
+            margin-top: 25px;
+        }
+        
+        .controls h3 {
+            margin-bottom: 10px;
+            color: #3a5199;
+        }
+        
+        .controls ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+        
+        .controls li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .key {
+            display: inline-block;
+            background: #3a5199;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-right: 8px;
+            font-size: 0.9rem;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        button {
+            background: linear-gradient(to right, #3a5199, #ff3864);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .instructions {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            width: 100%;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .instructions h2 {
+            color: #3a5199;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 2px solid #3a5199;
+            padding-bottom: 8px;
+        }
+        
+        .instructions p {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .instructions ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        @keyframes pulse {
+            from { transform: scale(0.9); }
+            to { transform: scale(1.1); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #00cc66; }
+            to { box-shadow: 0 0 15px #00cc66; }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .game-area {
+                flex-direction: column;
+            }
+            
+            #game-board {
+                grid-template-columns: repeat(15, 20px);
+                grid-template-rows: repeat(15, 20px);
+            }
+            
+            .cell {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -69,6 +321,309 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Configuração do jogo
+        const boardSize = 15;
+        let playerPosition = { x: 1, y: 1 };
+        let score = 0;
+        let coinsCollected = 0;
+        let totalCoins = 5;
+        let lives = 3;
+        let timeLeft = 60;
+        let gameInterval;
+        let enemyPositions = [{x: 7, y: 7}, {x: 10, y: 3}];
+        let powerUpPosition = {x: 13, y: 13};
+        let hasPowerUp = false;
+        let powerUpEndTime = 0;
+        
+        // Definição do mapa (0 = caminho, 1 = parede, 2 = moeda, 3 = saída)
+        const map = [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1],
+            [1, 2, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 2, 1],
+            [1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
+            [1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1],
+            [1, 2, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1],
+            [1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1],
+            [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+            [1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        ];
+        
+        // Inicializar o tabuleiro
+        function initializeBoard() {
+            const gameBoard = document.getElementById('game-board');
+            gameBoard.innerHTML = '';
+            
+            for (let y = 0; y < boardSize; y++) {
+                for (let x = 0; x < boardSize; x++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    cell.dataset.x = x;
+                    cell.dataset.y = y;
+                    
+                    if (map[y][x] === 1) {
+                        cell.classList.add('wall');
+                    } else {
+                        cell.classList.add('path');
+                        
+                        if (map[y][x] === 2) {
+                            cell.classList.add('coin');
+                        } else if (map[y][x] === 3) {
+                            cell.classList.add('exit');
+                        }
+                    }
+                    
+                    // Adicionar power-up
+                    if (x === powerUpPosition.x && y === powerUpPosition.y) {
+                        cell.classList.add('power-up');
+                    }
+                    
+                    gameBoard.appendChild(cell);
+                }
+            }
+            
+            // Adicionar inimigos
+            enemyPositions.forEach(enemy => {
+                const enemyCell = document.querySelector(`.cell[data-x="${enemy.x}"][data-y="${enemy.y}"]`);
+                if (enemyCell) {
+                    enemyCell.classList.add('enemy');
+                }
+            });
+            
+            updatePlayerPosition();
+        }
+        
+        // Atualizar a posição do jogador
+        function updatePlayerPosition() {
+            // Limpar todas as células do jogador
+            document.querySelectorAll('.player').forEach(cell => {
+                cell.classList.remove('player');
+            });
+            
+            // Adicionar o jogador na nova posição
+            const playerCell = document.querySelector(`.cell[data-x="${playerPosition.x}"][data-y="${playerPosition.y}"]`);
+            if (playerCell) {
+                playerCell.classList.add('player');
+                
+                // Verificar se coletou uma moeda
+                if (playerCell.classList.contains('coin')) {
+                    playerCell.classList.remove('coin');
+                    score += 10;
+                    coinsCollected++;
+                    document.getElementById('score').textContent = score;
+                    document.getElementById('coins').textContent = `${coinsCollected}/${totalCoins}`;
+                    
+                    // Verificar se coletou todas as moedas
+                    if (coinsCollected === totalCoins) {
+                        const exitCell = document.querySelector('.exit');
+                        if (exitCell) {
+                            exitCell.style.boxShadow = '0 0 15px #00ff33, 0 0 30px #00ff33';
+                        }
+                    }
+                }
+                
+                // Verificar se pegou o power-up
+                if (playerCell.classList.contains('power-up')) {
+                    playerCell.classList.remove('power-up');
+                    hasPowerUp = true;
+                    powerUpEndTime = Date.now() + 10000; // 10 segundos
+                    alert("Power-up ativado! Você é invencível por 10 segundos!");
+                }
+                
+                // Verificar se chegou à saída
+                if (playerCell.classList.contains('exit')) {
+                    if (coinsCollected === totalCoins) {
+                        clearInterval(gameInterval);
+                        alert(`Parabéns! Você completou o labirinto com ${score} pontos!`);
+                        resetGame();
+                    } else {
+                        alert("Você precisa coletar todas as moedas primeiro!");
+                    }
+                }
+                
+                // Verificar colisão com inimigos
+                if (playerCell.classList.contains('enemy')) {
+                    if (!hasPowerUp) {
+                        lives--;
+                        document.getElementById('lives').textContent = lives;
+                        
+                        if (lives <= 0) {
+                            clearInterval(gameInterval);
+                            alert("Game Over! Suas vidas acabaram!");
+                            resetGame();
+                        } else {
+                            alert("O inimigo te pegou! Perdeu uma vida.");
+                            resetPlayerPosition();
+                        }
+                    } else {
+                        // Se tem power-up, destrói o inimigo
+                        playerCell.classList.remove('enemy');
+                        enemyPositions = enemyPositions.filter(enemy => 
+                            !(enemy.x === playerPosition.x && enemy.y === playerPosition.y)
+                        );
+                        score += 20;
+                        document.getElementById('score').textContent = score;
+                    }
+                }
+            }
+        }
+        
+        // Reiniciar a posição do jogador
+        function resetPlayerPosition() {
+            playerPosition = { x: 1, y: 1 };
+            updatePlayerPosition();
+        }
+        
+        // Reiniciar o jogo
+        function resetGame() {
+            playerPosition = { x: 1, y: 1 };
+            score = 0;
+            coinsCollected = 0;
+            lives = 3;
+            timeLeft = 60;
+            hasPowerUp = false;
+            
+            document.getElementById('score').textContent = score;
+            document.getElementById('coins').textContent = `${coinsCollected}/${totalCoins}`;
+            document.getElementById('lives').textContent = lives;
+            document.getElementById('timer').textContent = timeLeft;
+            
+            clearInterval(gameInterval);
+            startGame();
+        }
+        
+        // Movimentação do jogador
+        document.addEventListener('keydown', (e) => {
+            let newX = playerPosition.x;
+            let newY = playerPosition.y;
+            
+            switch(e.key) {
+                case 'ArrowUp':
+                    newY--;
+                    break;
+                case 'ArrowDown':
+                    newY++;
+                    break;
+                case 'ArrowLeft':
+                    newX--;
+                    break;
+                case 'ArrowRight':
+                    newX++;
+                    break;
+                case 'r':
+                case 'R':
+                    resetGame();
+                    return;
+                default:
+                    return; // Sai se não for uma tecla de movimento
+            }
+            
+            // Verificar se o movimento é válido (não é parede)
+            if (newX >= 0 && newX < boardSize && newY >= 0 && newY < boardSize && map[newY][newX] !== 1) {
+                playerPosition.x = newX;
+                playerPosition.y = newY;
+                updatePlayerPosition();
+            }
+        });
+        
+        // Movimentar inimigos
+        function moveEnemies() {
+            enemyPositions.forEach((enemy) => {
+                // Limpar a célula do inimigo
+                const enemyCell = document.querySelector(`.cell[data-x="${enemy.x}"][data-y="${enemy.y}"]`);
+                if (enemyCell) {
+                    enemyCell.classList.remove('enemy');
+                }
+                
+                // Movimento simples do inimigo (poderia ser melhorado com IA)
+                const directions = [
+                    {x: 0, y: -1}, // cima
+                    {x: 1, y: 0},  // direita
+                    {x: 0, y: 1},  // baixo
+                    {x: -1, y: 0}  // esquerda
+                ];
+                
+                const validDirections = directions.filter(dir => {
+                    const newX = enemy.x + dir.x;
+                    const newY = enemy.y + dir.y;
+                    return newX >= 0 && newX < boardSize && 
+                           newY >= 0 && newY < boardSize && 
+                           map[newY][newX] !== 1;
+                });
+                
+                if (validDirections.length > 0) {
+                    const randomDir = validDirections[Math.floor(Math.random() * validDirections.length)];
+                    enemy.x += randomDir.x;
+                    enemy.y += randomDir.y;
+                }
+                
+                // Atualizar a posição do inimigo no mapa
+                const newEnemyCell = document.querySelector(`.cell[data-x="${enemy.x}"][data-y="${enemy.y}"]`);
+                if (newEnemyCell) {
+                    newEnemyCell.classList.add('enemy');
+                }
+            });
+            
+            // Verificar se o jogador foi pego por um inimigo após o movimento
+            const playerCell = document.querySelector(`.cell[data-x="${playerPosition.x}"][data-y="${playerPosition.y}"]`);
+            if (playerCell && playerCell.classList.contains('enemy') && !hasPowerUp) {
+                lives--;
+                document.getElementById('lives').textContent = lives;
+                
+                if (lives <= 0) {
+                    clearInterval(gameInterval);
+                    alert("Game Over! Suas vidas acabaram!");
+                    resetGame();
+                } else {
+                    alert("O inimigo te pegou! Perdeu uma vida.");
+                    resetPlayerPosition();
+                }
+            }
+        }
+        
+        // Verificar power-up
+        function checkPowerUp() {
+            if (hasPowerUp && Date.now() > powerUpEndTime) {
+                hasPowerUp = false;
+                alert("Power-up acabou! Você não está mais invencível.");
+            }
+        }
+        
+        // Atualizar timer
+        function updateTimer() {
+            timeLeft--;
+            document.getElementById('timer').textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(gameInterval);
+                alert("Tempo esgotado! Game Over!");
+                resetGame();
+            }
+        }
+        
+        // Iniciar o jogo
+        function startGame() {
+            initializeBoard();
+            
+            // Iniciar o timer do jogo
+            gameInterval = setInterval(() => {
+                moveEnemies();
+                updateTimer();
+                checkPowerUp();
+            }, 1000);
+        }
+        
+        // Botão de reiniciar
+        document.getElementById('restart-btn').addEventListener('click', resetGame);
+        
+        // Iniciar o jogo quando a página carregar
+        window.addEventListener('load', startGame);
+    </script>
 </body>
 </html>
